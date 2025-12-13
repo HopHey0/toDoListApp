@@ -61,7 +61,5 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.gson)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
-    androidTestImplementation(libs.androidx.navigation.testing)
+    testImplementation(kotlin("test"))
 }

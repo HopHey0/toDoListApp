@@ -1,7 +1,6 @@
 package com.example.pract_7_8.data.local
 
 import android.content.Context
-import com.example.pract_7_8.R
 import com.example.pract_7_8.data.model.TodoItemDto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
