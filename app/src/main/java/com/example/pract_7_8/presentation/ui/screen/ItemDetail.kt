@@ -1,5 +1,6 @@
 package com.example.pract_7_8.presentation.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -16,16 +17,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pract_7_8.R
 import com.example.pract_7_8.domain.model.TodoItem
+import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
 import com.example.pract_7_8.ui.theme.Pract_7_8Theme
 
 @Composable
 fun ItemDetail(
-    item: TodoItem
+    viewModel: TodolistViewModel,
+    itemId: Int,
+    onBackClick: () -> Unit
 ) {
+    val item = viewModel.todos.find { it.id == itemId } ?: TodoItem(-1, "Ошибка", " ", false)
     Column {
-        TopBarDetailScreen( { } )
+        TopBarDetailScreen( onBackClick )
         Column (
             modifier = Modifier.padding(horizontal = 15.dp)
         ) {
@@ -60,7 +66,9 @@ fun ItemDetail(
 fun ItemDetailPreview(){
     Pract_7_8Theme {
         ItemDetail(
-            TodoItem(1, "Sample", "Example", true)
+            viewModel(),
+            -1,
+            { }
         )
     }
 }
