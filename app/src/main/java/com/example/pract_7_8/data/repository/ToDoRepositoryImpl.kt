@@ -1,5 +1,6 @@
 package com.example.pract_7_8.data.repository
 
+import android.util.Log
 import com.example.pract_7_8.data.local.TodoJsonDataSource
 import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.domain.repository.TodoRepository
@@ -26,5 +27,6 @@ class ToDoRepositoryImpl(
                 it
             }
         }.toMutableList()
+
     }
 }

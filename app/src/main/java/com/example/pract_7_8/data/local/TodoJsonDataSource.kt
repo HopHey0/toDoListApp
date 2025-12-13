@@ -8,10 +8,9 @@ import com.google.gson.reflect.TypeToken
 
 class TodoJsonDataSource(private val context: Context) {
     private val gson = Gson()
-
     fun getTodos(): List<TodoItemDto> {
-        val inputStream = context.resources.openRawResource(R.raw.todos)
-        val json = inputStream.bufferedReader().use { it.readText() }
+        val json = context.assets.open("todos.json").bufferedReader().use {
+            it.readText() }
         val type = object : TypeToken<List<TodoItemDto>>() {}.type
         return gson.fromJson(json, type)
     }
