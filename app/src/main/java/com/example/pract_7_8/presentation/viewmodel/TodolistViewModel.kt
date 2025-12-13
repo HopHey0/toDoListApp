@@ -10,18 +10,23 @@ import com.example.pract_7_8.domain.usecase.GetTodosUseCase
 import com.example.pract_7_8.domain.usecase.ToggleTodoUseCase
 import kotlinx.coroutines.launch
 
-class TodoViewModel(
+class TodolistViewModel(
     private val getTodosUseCase: GetTodosUseCase,
     private val toggleTodoUseCase: ToggleTodoUseCase
 ) : ViewModel() {
 
     var todos by mutableStateOf<List<TodoItem>>(emptyList())
 
+    init {
+        viewModelScope.launch {
+            todos = getTodosUseCase.invoke()
+        }
+    }
 
     fun onToggleTodo(id: Int) {
         viewModelScope.launch {
             toggleTodoUseCase(id)
-            todos = getTodosUseCase()
+            todos = getTodosUseCase.invoke()
         }
     }
 }
