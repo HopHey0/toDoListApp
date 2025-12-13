@@ -24,7 +24,7 @@ fun ToDoList(
 ){
     val todos = todolistViewModel.todos
     Column {
-        TopBar()
+        TopBarToDOList()
         LazyColumn(
             modifier = Modifier.padding(horizontal = 15.dp),
         ) {
@@ -43,7 +43,7 @@ fun ToDoList(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(){
+fun TopBarToDOList(){
     TopAppBar(
         title = {
             Text(
