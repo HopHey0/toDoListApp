@@ -16,5 +16,59 @@
     "title": "Сделать ДЗ по Android",
     "description": "Clean Architecture + Compose",
     "isCompleted": false
+  },
+  {
+    "id": 4,
+    "title": "Купить капусту",
+    "description": "2 кг",
+    "isCompleted": true
+  },
+  {
+    "id": 5,
+    "title": "Поменять документы",
+    "description": "Паспорт + СНИЛС",
+    "isCompleted": false
+  },
+  {
+    "id": 6,
+    "title": "Позвонить управдому",
+    "description": "Напомнить о проводке",
+    "isCompleted": false
+  },
+  {
+    "id": 7,
+    "title": "Повесить рамку",
+    "description": "Картина",
+    "isCompleted": false
+  },
+  {
+    "id": 8,
+    "title": "Погулять с собакой",
+    "description": "-",
+    "isCompleted": true
+  },
+  {
+    "id": 9,
+    "title": "Приготовить ужин",
+    "description": "Макароны в соусе",
+    "isCompleted": false
+  },
+  {
+    "id": 10,
+    "title": "Зайти за заказом",
+    "description": "ул. Ленина, д.2, подъезд 3",
+    "isCompleted": true
+  },
+  {
+    "id": 11,
+    "title": "Занести фрукты",
+    "description": "Подарок соседу",
+    "isCompleted": false
+  },
+  {
+    "id": 12,
+    "title": "Вынести мусор",
+    "description": "-",
+    "isCompleted": false
   }
 ]

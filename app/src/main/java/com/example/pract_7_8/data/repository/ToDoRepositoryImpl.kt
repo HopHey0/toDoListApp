@@ -12,10 +12,13 @@ class ToDoRepositoryImpl(
     private var cachedTodos: MutableList<TodoItem> = mutableListOf()
 
 
-    override suspend fun getTodos(): List<TodoItem> {
+    init {
         cachedTodos = dataSource.getTodos()
             .map { TodoItem(it.id, it.title, it.description, it.isCompleted) }
             .toMutableList()
+    }
+
+    override suspend fun getTodos(): List<TodoItem> {
         return cachedTodos
     }
 
@@ -27,6 +30,5 @@ class ToDoRepositoryImpl(
                 it
             }
         }.toMutableList()
-
     }
 }

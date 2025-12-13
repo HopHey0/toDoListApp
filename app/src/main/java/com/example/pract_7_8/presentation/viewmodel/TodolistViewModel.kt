@@ -32,9 +32,7 @@ class TodolistViewModel(
 
     fun onToggleTodo(id: Int) {
         viewModelScope.launch {
-            Log.d("TAG1", getTodosUseCase.invoke().toString())
             toggleTodoUseCase.invoke(id)
-            Log.d("TAG2", getTodosUseCase.invoke().toString())
             loadTodos()
         }
     }
