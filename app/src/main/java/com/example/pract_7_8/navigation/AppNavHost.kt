@@ -1,6 +1,7 @@
 package com.example.pract_7_8.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,6 +16,7 @@ import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
 fun AppNavHost(
     viewModel: TodolistViewModel,
     navController: NavHostController = rememberNavController(),
+    modifier: Modifier
 ) {
     NavHost(navController = navController, startDestination = Routes.Home.route) {
         composable(Routes.Home.route) {
@@ -22,6 +24,7 @@ fun AppNavHost(
                 viewModel,
                 onItemClick = { itemId ->
                     navController.navigate(Routes.Detail.createRoute(itemId)) {popUpTo(Routes.Home.route)} },
+                modifier = modifier
             )
         }
         composable(
@@ -37,7 +40,8 @@ fun AppNavHost(
             ItemDetail(
                 itemId = itemId,
                 viewModel = viewModel,
-                onBackClick = { navController.navigate(Routes.Home.route) }
+                onBackClick = { navController.navigate(Routes.Home.route) },
+                modifier = modifier
             )
         }
     }

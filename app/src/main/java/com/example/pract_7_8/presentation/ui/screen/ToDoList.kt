@@ -11,20 +11,20 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.presentation.ui.component.ToDoRow
 import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
 
 @Composable
 fun ToDoList(
     todolistViewModel: TodolistViewModel,
-    onItemClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit,
+    modifier: Modifier
 ){
     val todos = todolistViewModel.todos
-    Column {
+    Column() {
         TopBarToDOList()
         LazyColumn(
-            modifier = Modifier.padding(horizontal = 15.dp),
+            modifier = modifier,
         ) {
             items(todos) { item ->
                 ToDoRow(
