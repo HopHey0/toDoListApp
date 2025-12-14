@@ -25,7 +25,8 @@ fun ToDoList(
     Column() {
         TopBarToDOList()
         LazyColumn(
-            modifier = modifier.testTag("homeScreen"),
+            modifier = modifier.testTag("homeScreen")
+                .padding(horizontal = 15.dp),
         ) {
             items(todos) { item ->
                 ToDoRow(

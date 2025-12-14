@@ -40,7 +40,7 @@ fun ItemDetail(
         ) {
             Text(
                 text = item.title,
-                fontSize = 42.sp
+                fontSize = 32.sp
             )
             Spacer(modifier = Modifier.padding(vertical = 2.5.dp))
             Text(

@@ -1,19 +1,17 @@
 package com.example.pract_7_8.data.repository
 
-import android.util.Log
-import com.example.pract_7_8.data.local.TodoJsonDataSource
+import com.example.pract_7_8.data.local.db.Tododao
+import com.example.pract_7_8.data.local.db.UserRoomDatabase
+import com.example.pract_7_8.data.local.entity.TodoItemEntity
 import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.domain.repository.TodoRepository
 
 class ToDoRepositoryImpl(
-    private val dataSource: TodoJsonDataSource
+    private val todoDao: Tododao
 ) : TodoRepository {
 
-    private var cachedTodos: MutableList<TodoItem> = mutableListOf()
-
-
-    init {
-        cachedTodos = dataSource.getTodos()
+    fun getTodos(): Flow<TodoItemEntity> {
+        cachedTodos = todoDao.getTodos()
             .map { TodoItem(it.id, it.title, it.description, it.isCompleted) }
             .toMutableList()
     }
