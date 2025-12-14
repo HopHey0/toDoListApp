@@ -9,7 +9,7 @@ data class TodoItemEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "todo_id")
     var id: Int = 0,
-    var title: String?,
+    var title: String,
     var description: String,
     var isCompleted: Boolean
 )
