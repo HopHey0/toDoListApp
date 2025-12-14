@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.pract_7_8.data.local.db.AppDataBase
 import com.example.pract_7_8.data.repository.ToDoRepositoryImpl
 import com.example.pract_7_8.domain.usecase.AddTodoUseCase
+import com.example.pract_7_8.domain.usecase.DeleteTodoUseCase
 import com.example.pract_7_8.domain.usecase.GetTodosUseCase
 import com.example.pract_7_8.domain.usecase.ToggleTodoUseCase
 import com.example.pract_7_8.navigation.AppNavHost
@@ -27,10 +28,12 @@ class MainActivity : ComponentActivity() {
         val getTodosUseCase = GetTodosUseCase(repository)
         val toggleTodoUseCase = ToggleTodoUseCase(repository)
         val addTodoUseCase = AddTodoUseCase(repository)
+        val deleteTodoUseCase = DeleteTodoUseCase(repository)
         val viewModel = TodolistViewModel(
             getTodosUseCase = getTodosUseCase,
             toggleTodoUseCase = toggleTodoUseCase,
-            addTodoUseCase = addTodoUseCase
+            addTodoUseCase = addTodoUseCase,
+            deleteTodoUseCase = deleteTodoUseCase
         )
         setContent {
             Pract_7_8Theme {

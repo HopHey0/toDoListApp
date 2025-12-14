@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pract_7_8.R
 import com.example.pract_7_8.presentation.ui.component.ToDoRow
@@ -41,9 +42,9 @@ fun ToDoList(
             items(todos.value) { item ->
                 ToDoRow(
                     item,
-                    { onItemClick(item.id) },
-                    { todolistViewModel.onToggleTodo(item.id) }
-
+                    onClick = { onItemClick(item.id) },
+                    onChecked = { todolistViewModel.onToggleTodo(item.id) },
+                    todolistViewModel
                 )
                 Spacer(modifier = Modifier.padding(vertical = 5.dp))
             }
