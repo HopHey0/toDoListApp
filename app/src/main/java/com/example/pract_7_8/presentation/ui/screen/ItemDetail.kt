@@ -9,6 +9,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -30,7 +32,8 @@ fun ItemDetail(
     onBackClick: () -> Unit,
     modifier: Modifier
 ) {
-    val item = viewModel.todos.find { it.id == itemId } ?: TodoItem(-1, "Ошибка", " ", false)
+    val todos by viewModel.todos.observeAsState(emptyList())
+    val item = todos.find { it.id == itemId } ?: TodoItem(-1, "Ошибка", " ", false)
     Column (
         modifier = Modifier.testTag("detailScreen")
     ){

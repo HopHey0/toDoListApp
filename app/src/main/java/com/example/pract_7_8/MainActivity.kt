@@ -9,8 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.pract_7_8.data.local.TodoJsonDataSource
+import com.example.pract_7_8.data.local.db.AppDataBase
 import com.example.pract_7_8.data.repository.ToDoRepositoryImpl
+import com.example.pract_7_8.domain.usecase.AddTodoUseCase
 import com.example.pract_7_8.domain.usecase.GetTodosUseCase
 import com.example.pract_7_8.domain.usecase.ToggleTodoUseCase
 import com.example.pract_7_8.navigation.AppNavHost
@@ -21,13 +22,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val dataSource = TodoJsonDataSource(this)
-        val repository = ToDoRepositoryImpl(dataSource)
+        val dataSource = AppDataBase.getInstance(this)
+        val repository = ToDoRepositoryImpl(dataSource.todoDao())
         val getTodosUseCase = GetTodosUseCase(repository)
         val toggleTodoUseCase = ToggleTodoUseCase(repository)
+        val addTodoUseCase = AddTodoUseCase(repository)
         val viewModel = TodolistViewModel(
             getTodosUseCase = getTodosUseCase,
-            toggleTodoUseCase = toggleTodoUseCase
+            toggleTodoUseCase = toggleTodoUseCase,
+            addTodoUseCase = addTodoUseCase
         )
         setContent {
             Pract_7_8Theme {

@@ -4,7 +4,7 @@ import com.example.pract_7_8.domain.model.TodoItem
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
-    suspend fun getTodos(): Flow<List<TodoItem>>
+    fun getTodos(): Flow<List<TodoItem>>
     suspend fun toggleTodo(id: Int)
 
     suspend fun addTodo(item: TodoItem)

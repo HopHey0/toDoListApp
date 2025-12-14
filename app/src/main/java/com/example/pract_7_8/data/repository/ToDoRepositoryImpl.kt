@@ -1,10 +1,11 @@
 package com.example.pract_7_8.data.repository
 
 import com.example.pract_7_8.data.local.db.Tododao
-import com.example.pract_7_8.data.local.db.UserRoomDatabase
 import com.example.pract_7_8.data.local.entity.TodoItemEntity
 import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.domain.repository.TodoRepository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -12,7 +13,8 @@ class ToDoRepositoryImpl(
     private val todoDao: Tododao
 ) : TodoRepository {
 
-    override suspend fun getTodos(): Flow<List<TodoItem>> {
+
+    override fun getTodos(): Flow<List<TodoItem>> {
         return todoDao.getTodos().map {list ->
             list.map { TodoItem(it.id, it.title, it.description, it.isCompleted) }
         }

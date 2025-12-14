@@ -14,11 +14,14 @@ interface Tododao {
     fun getTodos(): Flow<List<TodoItemEntity>>
 
     @Insert
-    fun addTodo(todo: TodoItemEntity)
+    suspend fun addTodo(todo: TodoItemEntity)
 
     @Query("UPDATE todos SET isCompleted = NOT isCompleted WHERE todos.todo_id = :id")
-    fun toggleTodo(id: Int)
+    suspend fun toggleTodo(id: Int)
 
-    @Delete
-    fun deleteTodo(id: Int)
+    @Query("DELETE FROM todos WHERE todos.todo_id = :id")
+    suspend fun deleteTodo(id: Int)
+
+    @Insert
+    suspend fun insertAll(listItem: List<TodoItemEntity>)
 }
