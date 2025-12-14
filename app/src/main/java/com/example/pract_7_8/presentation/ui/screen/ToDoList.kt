@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.pract_7_8.presentation.ui.component.ToDoRow
 import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
@@ -24,7 +25,7 @@ fun ToDoList(
     Column() {
         TopBarToDOList()
         LazyColumn(
-            modifier = modifier,
+            modifier = modifier.testTag("homeScreen"),
         ) {
             items(todos) { item ->
                 ToDoRow(

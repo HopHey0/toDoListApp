@@ -31,7 +31,8 @@ fun ToDoRow(
         modifier = Modifier.fillMaxWidth()
             .clip(shape = RoundedCornerShape(15.dp))
             .clickable(onClick = onClick)
-            .background(Color.LightGray),
+            .background(Color.LightGray)
+            .testTag("ClickableTodosOnListScreen${item.id}"),
         verticalAlignment = Alignment.CenterVertically
     ){
         Checkbox(

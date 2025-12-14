@@ -11,6 +11,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,9 @@ fun ItemDetail(
     modifier: Modifier
 ) {
     val item = viewModel.todos.find { it.id == itemId } ?: TodoItem(-1, "Ошибка", " ", false)
-    Column (){
+    Column (
+        modifier = Modifier.testTag("detailScreen")
+    ){
         TopBarDetailScreen( onBackClick )
         Column (
             modifier = modifier.padding(horizontal = 25.dp)
@@ -82,7 +85,9 @@ fun TopBarDetailScreen(
     TopAppBar(
         title = {  },
         navigationIcon = {
-            IconButton(onClick = onBackClick) {
+            IconButton(
+                modifier = Modifier.testTag("arrowBackButtonInDetailScreen"),
+                onClick = onBackClick) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_arrow_back_24),
                     contentDescription = "Назад"
