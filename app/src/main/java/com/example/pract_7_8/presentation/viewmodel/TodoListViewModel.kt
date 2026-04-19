@@ -3,13 +3,16 @@ package com.example.pract_7_8.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pract_7_8.domain.model.TodoItem
-import com.example.pract_7_8.domain.usecase.AddTodoUseCase
-import com.example.pract_7_8.domain.usecase.DeleteTodoUseCase
-import com.example.pract_7_8.domain.usecase.GetTodosUseCase
-import com.example.pract_7_8.domain.usecase.ToggleTodoUseCase
+import com.example.pract_7_8.domain.usecase.preferencesUseCases.GetCompletedColorUseCase
+import com.example.pract_7_8.domain.usecase.preferencesUseCases.SetCompletedColorUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.AddTodoUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.DeleteTodoUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.GetTodosUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.ToggleTodoUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -17,7 +20,8 @@ data class TodoUiState(
     var todos: List<TodoItem> = emptyList(),
     var showDialog: Boolean = false,
     var todoDialogHeader: String = "",
-    var todoDialogBody: String = ""
+    var todoDialogBody: String = "",
+    var isCompletedHasColor: Boolean = false
 )
 
 class TodoListViewModel(
@@ -25,6 +29,8 @@ class TodoListViewModel(
     private val toggleTodoUseCase: ToggleTodoUseCase,
     private val addTodoUseCase: AddTodoUseCase,
     private val deleteTodoUseCase: DeleteTodoUseCase,
+    private val getCompletedColorUseCase: GetCompletedColorUseCase,
+    private val setCompletedColorUseCase: SetCompletedColorUseCase
 ) : ViewModel() {
 
     private val _listUiState = MutableStateFlow(TodoUiState())
@@ -33,9 +39,15 @@ class TodoListViewModel(
     private var listJob: Job? = null
 
     init {
-        listJob = viewModelScope.launch {
+        viewModelScope.launch {
             getTodosUseCase.invoke().collect { todoList ->
                 _listUiState.update { it.copy(todos = todoList) }
+            }
+        }
+
+        viewModelScope.launch {
+            getCompletedColorUseCase.invoke().collect { isColored ->
+                _listUiState.update { it.copy(isCompletedHasColor = isColored) }
             }
         }
     }
@@ -74,6 +86,13 @@ class TodoListViewModel(
 
     fun deleteTodo(id: Int) {
         viewModelScope.launch { deleteTodoUseCase.invoke(id) }
+    }
+
+    fun toggleCompletedColor() {
+        viewModelScope.launch {
+            val current = _listUiState.value.isCompletedHasColor
+            setCompletedColorUseCase.invoke(!current)
+        }
     }
 
     override fun onCleared() {

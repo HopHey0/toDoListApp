@@ -1,6 +1,7 @@
 package com.example.pract_7_8.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -33,11 +35,13 @@ fun ToDoList(
             listUiState.showDialog,
             listUiState.todoDialogHeader,
             listUiState.todoDialogBody,
+            listUiState.isCompletedHasColor,
             todolistViewModel::addTodo,
             todolistViewModel::onShowDialogClick,
             todolistViewModel::onDialogDismiss,
             todolistViewModel::onHeaderChange,
-            todolistViewModel::onBodyChange
+            todolistViewModel::onBodyChange,
+            todolistViewModel::toggleCompletedColor
         )
         LazyColumn(
             modifier = modifier
@@ -63,11 +67,13 @@ fun TopBarToDoList(
     showDialog: Boolean,
     todoDialogHeader: String,
     todoDialogBody: String,
+    isColored: Boolean,
     addTodo: (String, String) -> Unit,
     onShowDialogClick: () -> Unit,
     onDialogDismiss: () -> Unit,
     onHeaderChange: (String) -> Unit,
-    onBodyChange: (String) -> Unit
+    onBodyChange: (String) -> Unit,
+    onSwitchToggle: () -> Unit
 ){
 
     if (showDialog){
@@ -88,14 +94,20 @@ fun TopBarToDoList(
             )
         },
         actions = {
-            IconButton(
-                modifier = Modifier,
-
-                onClick = { onShowDialogClick() }) {
-                Icon(
-                    painter = painterResource(R.drawable.todo_add),
-                    contentDescription = "Создать запись"
+            Row {
+                Switch(
+                    checked = isColored,
+                    onCheckedChange = { onSwitchToggle() }
                 )
+                IconButton(
+                    modifier = Modifier,
+
+                    onClick = { onShowDialogClick() }) {
+                    Icon(
+                        painter = painterResource(R.drawable.todo_add),
+                        contentDescription = "Создать запись"
+                    )
+                }
             }
         }
     )

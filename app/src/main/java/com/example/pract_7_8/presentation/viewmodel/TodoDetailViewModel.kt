@@ -3,8 +3,8 @@ package com.example.pract_7_8.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pract_7_8.domain.model.TodoItem
-import com.example.pract_7_8.domain.usecase.GetSingleTodoUseCase
-import com.example.pract_7_8.domain.usecase.UpdateTodoUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.GetSingleTodoUseCase
+import com.example.pract_7_8.domain.usecase.todoUseCases.UpdateTodoUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

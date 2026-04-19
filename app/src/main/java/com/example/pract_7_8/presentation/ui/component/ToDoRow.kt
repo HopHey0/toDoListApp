@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pract_7_8.R
 import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.presentation.viewmodel.TodoListViewModel
@@ -32,11 +34,12 @@ fun ToDoRow(
     onChecked: () -> Unit,
     todolistViewModel: TodoListViewModel
 ){
+    val isColored = todolistViewModel.listUiState.collectAsStateWithLifecycle().value.isCompletedHasColor
     Row (
         modifier = Modifier.fillMaxWidth()
             .clip(shape = RoundedCornerShape(15.dp))
             .clickable(onClick = onClick)
-            .background(Color.LightGray)
+            .background(if (isColored && item.isCompleted) Color.Green else Color.LightGray)
             .testTag("ClickableTodosOnListScreen${item.id}"),
         verticalAlignment = Alignment.CenterVertically
     ){

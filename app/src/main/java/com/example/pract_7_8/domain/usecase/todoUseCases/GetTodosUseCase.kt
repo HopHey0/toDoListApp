@@ -1,4 +1,4 @@
-package com.example.pract_7_8.domain.usecase
+package com.example.pract_7_8.domain.usecase.todoUseCases
 
 import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.domain.repository.TodoRepository

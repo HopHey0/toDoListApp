@@ -83,7 +83,10 @@ dependencies {
     implementation("io.insert-koin:koin-android:4.2.1")
     implementation("io.insert-koin:koin-androidx-compose:4.2.1")
 
+    // Extended icons
     implementation("androidx.compose.material:material-icons-extended")
 
-
+    // DataStore dependencies
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
+    implementation("androidx.datastore:datastore-core:1.2.1")
 }
