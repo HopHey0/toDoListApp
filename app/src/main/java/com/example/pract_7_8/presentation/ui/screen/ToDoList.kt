@@ -20,7 +20,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pract_7_8.R
+import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.presentation.ui.component.ToDoRow
 import com.example.pract_7_8.presentation.ui.component.TodoCreateDialog
 import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
@@ -31,15 +33,24 @@ fun ToDoList(
     onItemClick: (Int) -> Unit,
     modifier: Modifier
 ){
-    val todos = todolistViewModel.todos.observeAsState(emptyList())
+    val listUiState = todolistViewModel.listUiState.collectAsStateWithLifecycle().value
     Column() {
-        TopBarToDoList(todolistViewModel)
+        TopBarToDoList(
+            listUiState.showDialog,
+            listUiState.todoDialogHeader,
+            listUiState.todoDialogBody,
+            todolistViewModel::addTodo,
+            todolistViewModel::onShowDialogClick,
+            todolistViewModel::onDialogDismiss,
+            todolistViewModel::onHeaderChange,
+            todolistViewModel::onBodyChange
+        )
         LazyColumn(
             modifier = modifier
                 .testTag("homeScreen")
                 .padding(horizontal = 15.dp),
         ) {
-            items(todos.value) { item ->
+            items(listUiState.todos) { item ->
                 ToDoRow(
                     item,
                     onClick = { onItemClick(item.id) },
@@ -55,11 +66,26 @@ fun ToDoList(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarToDoList(
-    todolistViewModel: TodolistViewModel
+    showDialog: Boolean,
+    todoDialogHeader: String,
+    todoDialogBody: String,
+    addTodo: (TodoItem) -> Unit,
+    onShowDialogClick: () -> Unit,
+    onDialogDismiss: () -> Unit,
+    onHeaderChange: (String) -> Unit,
+    onBodyChange: (String) -> Unit
 ){
-    val openDialog = rememberSaveable { mutableStateOf(false) }
-    if (openDialog.value){
-        TodoCreateDialog(openDialog, { }, { todolistViewModel.addTodo(it)})
+
+    if (showDialog){
+        TodoCreateDialog(
+            showDialog = showDialog,
+            todoDialogHeader = todoDialogHeader,
+            todoDialogBody = todoDialogBody,
+            onConfirmRequest = addTodo,
+            onHeaderChange = onHeaderChange,
+            onBodyChange = onBodyChange,
+            onDialogDismiss = onDialogDismiss
+        )
     }
     TopAppBar(
         title = {
@@ -71,7 +97,7 @@ fun TopBarToDoList(
             IconButton(
                 modifier = Modifier,
 
-                onClick = { openDialog.value = true }) {
+                onClick = { onShowDialogClick() }) {
                 Icon(
                     painter = painterResource(R.drawable.todo_add),
                     contentDescription = "Создать запись"

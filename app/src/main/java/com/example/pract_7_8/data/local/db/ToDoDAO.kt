@@ -1,5 +1,6 @@
 package com.example.pract_7_8.data.local.db
 
+import androidx.activity.BackEventCompat
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -24,4 +25,7 @@ interface Tododao {
 
     @Insert
     suspend fun insertAll(listItem: List<TodoItemEntity>)
+
+    @Query("SELECT * FROM todos WHERE todos.todo_id = :id")
+    fun getTodo(id: Int): Flow<TodoItemEntity>
 }

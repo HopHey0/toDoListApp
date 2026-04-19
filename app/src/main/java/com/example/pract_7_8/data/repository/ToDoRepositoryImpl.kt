@@ -32,4 +32,10 @@ class ToDoRepositoryImpl(
     override suspend fun deleteTodo(id: Int) {
         todoDao.deleteTodo(id)
     }
+
+    override suspend fun getTodo(id: Int): Flow<TodoItem>{
+        return todoDao.getTodo(id).map { entity ->
+            TodoItem(entity.id, entity.title, entity.description, entity.isCompleted)
+        }
+    }
 }

@@ -23,23 +23,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val dataSource = AppDataBase.getInstance(this)
-        val repository = ToDoRepositoryImpl(dataSource.todoDao())
-        val getTodosUseCase = GetTodosUseCase(repository)
-        val toggleTodoUseCase = ToggleTodoUseCase(repository)
-        val addTodoUseCase = AddTodoUseCase(repository)
-        val deleteTodoUseCase = DeleteTodoUseCase(repository)
-        val viewModel = TodolistViewModel(
-            getTodosUseCase = getTodosUseCase,
-            toggleTodoUseCase = toggleTodoUseCase,
-            addTodoUseCase = addTodoUseCase,
-            deleteTodoUseCase = deleteTodoUseCase
-        )
         setContent {
             Pract_7_8Theme {
                 Scaffold { innerPadding ->
-                    val navController: NavHostController = rememberNavController()
-                    AppNavHost(viewModel, navController, Modifier.padding(innerPadding))
+                    AppNavHost(Modifier.padding(innerPadding))
                 }
             }
         }

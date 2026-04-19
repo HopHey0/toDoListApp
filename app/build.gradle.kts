@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") // For Room library
 }
 
 android {
@@ -72,10 +72,16 @@ dependencies {
     implementation(libs.gson)
     testImplementation(kotlin("test"))
 
+    // Room dependencies
     implementation(libs.androidx.room.ktx)
     androidTestImplementation(libs.androidx.room.testing)
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+
+    // Koin dependencies
+    implementation("io.insert-koin:koin-android:4.2.1")
+    implementation("io.insert-koin:koin-androidx-compose:4.2.1")
+
 
 }

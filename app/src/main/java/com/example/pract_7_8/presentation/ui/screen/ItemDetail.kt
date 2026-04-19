@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pract_7_8.R
 import com.example.pract_7_8.domain.model.TodoItem
@@ -27,13 +28,11 @@ import com.example.pract_7_8.ui.theme.Pract_7_8Theme
 
 @Composable
 fun ItemDetail(
-    viewModel: TodolistViewModel,
-    itemId: Int,
+    item: TodoItem?,
     onBackClick: () -> Unit,
     modifier: Modifier
 ) {
-    val todos by viewModel.todos.observeAsState(emptyList())
-    val item = todos.find { it.id == itemId } ?: TodoItem(-1, "Ошибка", " ", false)
+    if (item == null) return
     Column (
         modifier = Modifier.testTag("detailScreen")
     ){
@@ -72,8 +71,12 @@ fun ItemDetail(
 fun ItemDetailPreview(){
     Pract_7_8Theme {
         ItemDetail(
-            viewModel(),
-            -1,
+            TodoItem(
+                id = 1,
+                title = "Покормить кошку",
+                description = "Покормить кошку кормом с верхней полки",
+                isCompleted = false
+            ),
             { },
             Modifier
         )

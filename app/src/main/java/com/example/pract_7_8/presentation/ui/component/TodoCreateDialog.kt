@@ -27,16 +27,19 @@ import com.example.pract_7_8.domain.model.TodoItem
 
 @Composable
 fun TodoCreateDialog(
-    showDialog: MutableState<Boolean>,
-    onDismissRequest: () -> Unit,
-    onConfirmRequest: (TodoItem) -> Unit
+    showDialog: Boolean,
+    todoDialogHeader: String,
+    todoDialogBody: String,
+    onConfirmRequest: (TodoItem) -> Unit,
+    onHeaderChange: (String) -> Unit,
+    onBodyChange: (String) -> Unit,
+    onDialogDismiss: () -> Unit
 ) {
-    if (!showDialog.value) return
+    if (!showDialog) return
 
-    val title = rememberSaveable { mutableStateOf("") }
-    val description = rememberSaveable { mutableStateOf("") }
-
-    Dialog(onDismissRequest = { onDismissRequest() }) {
+    Dialog(
+        onDismissRequest = { onDialogDismiss() }
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -48,15 +51,15 @@ fun TodoCreateDialog(
                 modifier = Modifier.padding(15.dp)
             ) {
                 OutlinedTextField(
-                    value = title.value,
-                    onValueChange = { title.value = it },
+                    value = todoDialogHeader,
+                    onValueChange = { onHeaderChange(it) },
                     label = { Text("Название задачи", color = Color.Gray) },
                     modifier = Modifier.weight(1f)
                 )
 
                 OutlinedTextField(
-                    value = description.value,
-                    onValueChange = { description.value = it },
+                    value = todoDialogBody,
+                    onValueChange = { onBodyChange(it) },
                     label = { Text("Описание", color = Color.Gray) },
                     modifier = Modifier.weight(3f)
                 )
@@ -73,21 +76,21 @@ fun TodoCreateDialog(
                             onConfirmRequest(
                                 TodoItem(
                                     id = -1,
-                                    title = title.value,
-                                    description = description.value,
+                                    title = todoDialogHeader,
+                                    description = todoDialogBody,
                                     isCompleted = false
                                 )
                             )
-                            showDialog.value = false
+                            onDialogDismiss()
                         },
-                        enabled = title.value.isNotBlank() && description.value.isNotBlank()
+                        enabled = todoDialogHeader.isNotBlank() && todoDialogBody.isNotBlank()
                     ) {
                         Text("Сохранить")
                     }
 
                     TextButton(
                         modifier = Modifier.weight(3f),
-                        onClick = { showDialog.value = false }
+                        onClick = { onDialogDismiss() }
                     ) {
                         Text("Отменить")
                     }
