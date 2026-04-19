@@ -5,7 +5,7 @@ import com.example.pract_7_8.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetSingleTodoUseCase(private val repository: TodoRepository) {
-    suspend fun invoke(id: Int): Flow<TodoItem> {
+    fun invoke(id: Int): Flow<TodoItem> {
         return repository.getTodo(id)
     }
 }

@@ -1,9 +1,6 @@
 package com.example.pract_7_8.data.local.db
 
-import androidx.activity.BackEventCompat
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.pract_7_8.data.local.entity.TodoItemEntity
@@ -28,4 +25,7 @@ interface Tododao {
 
     @Query("SELECT * FROM todos WHERE todos.todo_id = :id")
     fun getTodo(id: Int): Flow<TodoItemEntity>
+
+    @Query("UPDATE todos SET title = :newTitle, description = :newDescription WHERE todos.todo_id = :id")
+    suspend fun updateTodo(id: Int, newTitle: String, newDescription: String)
 }

@@ -12,8 +12,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pract_7_8.R
 import com.example.pract_7_8.domain.model.TodoItem
-import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
+import com.example.pract_7_8.presentation.viewmodel.TodoListViewModel
 
 @Composable
 fun ToDoRow(
     item: TodoItem,
     onClick: () -> Unit,
     onChecked: () -> Unit,
-    todolistViewModel: TodolistViewModel
+    todolistViewModel: TodoListViewModel
 ){
     Row (
         modifier = Modifier.fillMaxWidth()

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,50 +11,44 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.pract_7_8.presentation.ui.screen.ItemDetail
 import com.example.pract_7_8.presentation.ui.screen.ToDoList
-import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
+import com.example.pract_7_8.presentation.viewmodel.TodoDetailsViewModel
+import com.example.pract_7_8.presentation.viewmodel.TodoListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AppNavHost(
-    modifier: Modifier
-) {
+fun AppNavHost(modifier: Modifier) {
     val navController = rememberNavController()
-    val viewModel: TodolistViewModel = koinViewModel()
 
     NavHost(navController = navController, startDestination = Routes.Home.route) {
         composable(Routes.Home.route) {
+            val listViewModel: TodoListViewModel = koinViewModel()
             ToDoList(
-                viewModel,
+                listViewModel,
                 onItemClick = { itemId ->
-                    navController.navigate(Routes.Detail.createRoute(itemId)) {
-                        popUpTo(Routes.Home.route) {inclusive = true}
-                    }
-                              },
+                    navController.navigate(Routes.Detail.createRoute(itemId))
+                },
                 modifier = modifier
             )
         }
         composable(
             route = Routes.Detail.route,
-            arguments = listOf(
-                navArgument("itemId") {
-                    type = NavType.IntType
-                }
-            )
+            arguments = listOf(navArgument("itemId") { type = NavType.IntType })
         ) { backStackEntry ->
+            val detailsViewModel: TodoDetailsViewModel = koinViewModel()
             val itemId = backStackEntry.arguments?.getInt("itemId") ?: -1
 
             LaunchedEffect(itemId) {
-                viewModel.getSingleTodo(itemId)
+                detailsViewModel.loadTodo(itemId)
             }
 
-            val item = viewModel.detailsUiState.collectAsStateWithLifecycle().value.item
+            val item = detailsViewModel.detailsUiState.collectAsStateWithLifecycle().value.item
 
             ItemDetail(
                 item = item,
-                onBackClick = { navController.navigate(Routes.Home.route) {popUpTo(Routes.Home.route) {inclusive = true} } },
+                viewModel = detailsViewModel,
+                onBackClick = { navController.popBackStack() },
                 modifier = modifier
             )
         }
     }
 }
-

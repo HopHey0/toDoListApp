@@ -11,25 +11,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pract_7_8.R
-import com.example.pract_7_8.domain.model.TodoItem
 import com.example.pract_7_8.presentation.ui.component.ToDoRow
 import com.example.pract_7_8.presentation.ui.component.TodoCreateDialog
-import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
+import com.example.pract_7_8.presentation.viewmodel.TodoListViewModel
 
 @Composable
 fun ToDoList(
-    todolistViewModel: TodolistViewModel,
+    todolistViewModel: TodoListViewModel,
     onItemClick: (Int) -> Unit,
     modifier: Modifier
 ){
@@ -69,7 +63,7 @@ fun TopBarToDoList(
     showDialog: Boolean,
     todoDialogHeader: String,
     todoDialogBody: String,
-    addTodo: (TodoItem) -> Unit,
+    addTodo: (String, String) -> Unit,
     onShowDialogClick: () -> Unit,
     onDialogDismiss: () -> Unit,
     onHeaderChange: (String) -> Unit,

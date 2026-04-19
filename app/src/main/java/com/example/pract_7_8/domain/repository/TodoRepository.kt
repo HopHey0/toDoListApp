@@ -7,9 +7,11 @@ interface TodoRepository {
     fun getTodos(): Flow<List<TodoItem>>
     suspend fun toggleTodo(id: Int)
 
-    suspend fun addTodo(item: TodoItem)
+    suspend fun addTodo(title: String, description: String)
 
     suspend fun deleteTodo(id: Int)
 
-    suspend fun getTodo(id: Int): Flow<TodoItem>
+    fun getTodo(id: Int): Flow<TodoItem>
+
+    suspend fun updateTodo(id: Int, newTitle: String, newDescription: String)
 }

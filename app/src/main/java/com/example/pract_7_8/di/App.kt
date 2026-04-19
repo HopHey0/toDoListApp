@@ -9,7 +9,9 @@ import com.example.pract_7_8.domain.usecase.DeleteTodoUseCase
 import com.example.pract_7_8.domain.usecase.GetSingleTodoUseCase
 import com.example.pract_7_8.domain.usecase.GetTodosUseCase
 import com.example.pract_7_8.domain.usecase.ToggleTodoUseCase
-import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
+import com.example.pract_7_8.domain.usecase.UpdateTodoUseCase
+import com.example.pract_7_8.presentation.viewmodel.TodoDetailsViewModel
+import com.example.pract_7_8.presentation.viewmodel.TodoListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.module.dsl.viewModel
@@ -26,8 +28,10 @@ class App: Application() {
         factory { GetTodosUseCase(get()) }
         factory { ToggleTodoUseCase(get()) }
         factory { GetSingleTodoUseCase(get()) }
+        factory { UpdateTodoUseCase(get()) }
 
-        viewModel { TodolistViewModel(get(), get(), get(), get(), get()) }
+        viewModel { TodoListViewModel(get(), get(), get(), get()) }
+        viewModel { TodoDetailsViewModel(get(), get()) }
 
     }
 

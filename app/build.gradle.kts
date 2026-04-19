@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += mapOf("room.schemaLocation" to "$projectDir/schemas/".toString())
+                arguments += mapOf("room.schemaLocation" to "$projectDir/schemas/")
             }
         }
     }
@@ -82,6 +82,8 @@ dependencies {
     // Koin dependencies
     implementation("io.insert-koin:koin-android:4.2.1")
     implementation("io.insert-koin:koin-androidx-compose:4.2.1")
+
+    implementation("androidx.compose.material:material-icons-extended")
 
 
 }

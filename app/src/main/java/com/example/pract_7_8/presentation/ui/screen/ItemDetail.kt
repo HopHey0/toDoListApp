@@ -3,14 +3,14 @@ package com.example.pract_7_8.presentation.ui.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -23,20 +23,27 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pract_7_8.R
 import com.example.pract_7_8.domain.model.TodoItem
-import com.example.pract_7_8.presentation.viewmodel.TodolistViewModel
+import com.example.pract_7_8.presentation.ui.component.TodoCreateDialog
+import com.example.pract_7_8.presentation.viewmodel.TodoDetailsViewModel
 import com.example.pract_7_8.ui.theme.Pract_7_8Theme
 
 @Composable
 fun ItemDetail(
     item: TodoItem?,
+    viewModel: TodoDetailsViewModel,
     onBackClick: () -> Unit,
     modifier: Modifier
 ) {
     if (item == null) return
+
+    val uiState = viewModel.detailsUiState.collectAsStateWithLifecycle().value
     Column (
         modifier = Modifier.testTag("detailScreen")
     ){
-        TopBarDetailScreen( onBackClick )
+        TopBarDetailScreen(
+            onBackClick,
+            viewModel::onShowEditDialogClick
+        )
         Column (
             modifier = modifier.padding(horizontal = 25.dp)
         ) {
@@ -63,6 +70,20 @@ fun ItemDetail(
             )
         }
 
+
+        if (uiState.showDialog){
+            TodoCreateDialog(
+                showDialog = uiState.showDialog,
+                todoDialogHeader = uiState.todoDialogHeader,
+                todoDialogBody = uiState.todoDialogBody,
+                onConfirmRequest = viewModel::updateTodo,
+                onHeaderChange = viewModel::onHeaderChange,
+                onBodyChange = viewModel::onBodyChange,
+                onDialogDismiss = viewModel::onDialogDismiss
+            )
+        }
+
+
     }
 }
 
@@ -77,6 +98,7 @@ fun ItemDetailPreview(){
                 description = "Покормить кошку кормом с верхней полки",
                 isCompleted = false
             ),
+            viewModel(),
             { },
             Modifier
         )
@@ -86,7 +108,8 @@ fun ItemDetailPreview(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarDetailScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    showDialogClick: () -> Unit
 ) {
     TopAppBar(
         title = {  },
@@ -99,6 +122,15 @@ fun TopBarDetailScreen(
                     contentDescription = "Назад"
                 )
             }
+        },
+        actions = {
+            IconButton(
+                onClick = { showDialogClick() }
+            ) {
+                Icon(
+                    Icons.Filled.Settings,
+                    contentDescription = null)
+            }
         }
     )
 }
@@ -109,7 +141,8 @@ fun TopBarDetailScreen(
 fun PreviewMyTopAppBar() {
     Pract_7_8Theme {
         TopBarDetailScreen(
-            onBackClick = {  }
+            onBackClick = {  },
+            showDialogClick = {  }
         )
     }
 }
